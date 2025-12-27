@@ -6,7 +6,7 @@ import streamlit as st
 import time
 
 # مكان حفظ التحميلات
-DOWNLOAD_DIR = os.environ.get("DOWNLOAD_DIR", "downloads")
+DOWNLOAD_DIR = "downloads"
 os.makedirs(DOWNLOAD_DIR, exist_ok=True)
 
 # حالات المهام (in-memory)
@@ -87,18 +87,18 @@ def run_download(job_id, url, fmt, headers=None):
         jobs[job_id].update({"state": "error", "info": str(e)})
 
 # واجهة Streamlit
-st.title("🎬 LinxGo")
+st.title("🎬 LinxGo Downloader")
 
-url = st.text_input("Download videos from YouTube, TikTok, Facebook, Instagram and X.")
-quality = st.selectbox("quality", ["high", "medium", "low", "audio"])
+url = st.text_input("Enter video URL (YouTube, TikTok, Facebook, Instagram, X):")
+quality = st.selectbox("Select quality", ["high", "medium", "low", "audio"])
 
 if st.button("Start Download"):
     if url:
-        # تعديل نهائي: أي اختيار فيه دمج يتحول تلقائيًا لـ "best"
+        # صيغة واحدة فقط بدون دمج → ملف جاهز
         if quality == "high":
             fmt = "best"
         elif quality == "medium":
-            fmt = "best[height<=720]"   # صيغة واحدة بدون دمج
+            fmt = "best[height<=720]"
         elif quality == "low":
             fmt = "worst"
         else:
@@ -137,3 +137,26 @@ if st.button("Start Download"):
                     st.download_button("Download " + f, file_data, file_name=f)
         elif jobs[job_id]["state"] == "error":
             status_placeholder.error(f"❌ Job {job_id} failed: {jobs[job_id]['info']}")
+
+# ===== Footer ثابت باسمك =====
+st.markdown(
+    """
+    <style>
+    .footer {
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        background-color: black;
+        color: #FFFFFF;
+        text-align: center;
+        padding: 8px;
+        font-size: 12px;
+    }
+    </style>
+    <div class="footer">
+        Developed by: <b>Bnkhlid</b>
+    </div>
+    """,
+    unsafe_allow_html=True
+)
