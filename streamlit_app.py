@@ -87,7 +87,7 @@ def run_download(job_id, url, fmt, headers=None):
         jobs[job_id].update({"state": "error", "info": str(e)})
 
 # واجهة Streamlit
-st.title("🎬 LinxGo Downloader")
+st.title("🎬 LinxGo ")
 
 url = st.text_input("Enter video URL (YouTube, TikTok, Facebook, Instagram, X):")
 quality = st.selectbox("Select quality", ["high", "medium", "low", "audio"])
@@ -160,3 +160,4 @@ st.markdown(
     """,
     unsafe_allow_html=True
 )
+
