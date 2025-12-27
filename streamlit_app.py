@@ -147,8 +147,8 @@ st.markdown(
         left: 0;
         bottom: 0;
         width: 100%;
-        background-color: black;
-        color: #FFFFFF;
+        background-color: #f0f0f0;
+        color: #333;
         text-align: center;
         padding: 8px;
         font-size: 12px;
